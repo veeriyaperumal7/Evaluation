@@ -24,20 +24,25 @@ public class Question1 {
 	    	}System.out.println();
 	      }
 		}
-
-		private static void fillPattern(int[][] pattern, int number) {
-			int row=number-1,startRow=0,startColumn=0,endColumn=number-1,num=1;
-			while(startRow<row && startColumn<endColumn) {
-			for(int i=0;i<=row;i++) {
+	
+	private static void fillPattern(int [][]pattern ,int number) {
+		int startRow=0,endRow=number-1,startColumn=0,endColumn=number-1,num=1,rotationCounter=0;
+		while(startRow<=endRow || startColumn<=endColumn) {
+			for(int i=startRow;i<=endRow;i++) {
 				pattern[i][startColumn+i]=num++;
-			}startColumn++;
-			 row--;
-			for(int i=row;i>=startRow;i--) {
+			}
+			startColumn++;
+			endRow--;
+			for(int i=endRow;i>startRow;i--) {
 				pattern[i][endColumn]=num++;
-			}endColumn--;
-			for(int i=endColumn;i>startColumn;i--) {
+			}
+			for(int i=endColumn;i>=startColumn+rotationCounter;i--) {
 				pattern[startRow][i]=num++;
-			}startRow++;row--;
+			}
+			endColumn--;
+			startRow++;
+			endRow--;
+			rotationCounter++;//Rotation counter used to avoid overlapping one previous values.
 		}
 	}
 }
