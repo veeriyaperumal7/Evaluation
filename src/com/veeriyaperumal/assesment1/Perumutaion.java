@@ -1,4 +1,4 @@
-package evaluation.assesment1;
+package com.veeriyaperumal.assesment1;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -31,11 +31,10 @@ public class Perumutaion {
 		
 		permutation.findPermutation(0, permutation.arr.length, result);
 		
-		System.out.println("Permutation of a number is  : ");
+		System.out.println("Permutation of a number is  : " + result.size());
 		for (int[] temp : result) {
 			System.out.println(Arrays.toString(temp));
 		}
-
 	}
 
 	private void findPermutation(int start, int end, ArrayList<int[]> result) {

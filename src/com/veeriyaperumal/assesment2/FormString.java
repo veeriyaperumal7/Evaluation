@@ -1,4 +1,4 @@
-package evaluation.assesment2;
+package com.veeriyaperumal.assesment2;
 
 import java.util.Scanner;
 

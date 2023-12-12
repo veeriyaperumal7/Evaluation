@@ -1,4 +1,4 @@
-package evaluation.assesment2;
+package com.veeriyaperumal.assesment2;
 
 import java.util.Scanner;
 
@@ -18,12 +18,22 @@ public class MaximumContinuousSubarray {
 	}
 
 	private void getMaximumContinuousSubarray() {
-		int max = Integer.MIN_VALUE, tempMax = 0, start = -1, end = -1;
+		int max = Integer.MIN_VALUE, tempMax = 0, start = -1, end = -1, negativeCount = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] < 0) {
+				negativeCount++;
+			}
+			max = Math.max(max, arr[i]);
+		}
+		if (negativeCount == arr.length) {
+			System.out.print("Maximum subarray is : " + max);
+			return;
+		}
+		max = Integer.MIN_VALUE;
 		for (int i = 0; i < arr.length; i++) {
 			tempMax += arr[i];
 			if (tempMax < 0) {
 				start = i;
-				end = i;
 				tempMax = 0;
 			} else if (tempMax > max) {
 				max = tempMax;

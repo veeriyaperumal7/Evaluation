@@ -1,4 +1,4 @@
-package evaluation.assesment1;
+package com.veeriyaperumal.assesment1;
 
 import java.util.*;
 
