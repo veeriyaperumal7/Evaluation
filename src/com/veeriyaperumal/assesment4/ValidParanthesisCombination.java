@@ -7,75 +7,59 @@ import java.util.Stack;
 
 public class ValidParanthesisCombination {
 	char arr[];
-	String input;
 	private static Scanner read = new Scanner(System.in);
 
-	public ValidParanthesisCombination(String input) {
-		this.input = input;
-		arr = input.toCharArray();
-	}
-
-	private static String getInput() {
-		int n;
-		String str = "";
-		System.out.print("Enter the number of paranthesis set : ");
-		n = read.nextInt();
-		for (int i = 0; i < n; i++) {
-			str += "()";
-		}
-		return str;
+	public ValidParanthesisCombination(int length) {
+		arr = new char[length];
 	}
 
 	public static void main(String[] args) {
-		ValidParanthesisCombination obj = new ValidParanthesisCombination(getInput());
+		System.out.print("Enter how many set of paranthesis : ");
+		ValidParanthesisCombination obj = new ValidParanthesisCombination(read.nextInt() * 2);
 		Set<String> result = new HashSet<>();
-		obj.generateCombination(0, obj.input.length(), result, obj.arr);
+		obj.generateCombination(0, result, 0, 0, obj.arr, obj.arr.length / 2);
 		obj.printValidCombinations(result);
 	}
 
 	private void printValidCombinations(Set<String> result) {
-		System.out.println("The valid combinations of a given " + input.length()/2 + " paranthesis set is : ");
+		System.out.println("The valid combinations of a given " + arr.length / 2 + " paranthesis set is : ");
 		for (String temp : result) {
 			System.out.println(temp);
 		}
 
 	}
 
-	private void generateCombination(int start, int end, Set<String> result, char arr[]) {
-		if (start >= end) {
-			if (isValidParanthesis(new String(arr))) {
-				result.add(new String(arr));
-			}
+	private void generateCombination(int index, Set<String> result, int open, int close, char arr[], int n) {
+		if (close == n) {
+			result.add(new String(arr));
 			return;
 		}
-		for (int i = start; i < end; i++) {
-			swap(i, start, arr);
-			generateCombination(start + 1, end, result, arr);
-			swap(i, start, arr);
+		if (open < n) {
+			arr[index] = '(';
+			generateCombination(index + 1, result, open + 1, close, arr, n);
 		}
-	}
-
-	private boolean isValidParanthesis(String str) {
-		Stack<Character> stack = new Stack();
-		for (int i = 0; i < str.length(); i++) {
-			if (str.charAt(i) == '(') {
-				stack.push(str.charAt(i));
-			} else {
-				if (stack.isEmpty()) {
-					return false;
-				} else {
-					stack.pop();
-				}
-			}
+		if (close < open) {
+			arr[index] = ')';
+			generateCombination(index + 1, result, open, close + 1, arr, n);
 		}
-		return (stack.isEmpty()) ? true : false;
 
 	}
 
-	private static void swap(int i, int j, char[] arr) {
-		char temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
-	}
+//	private boolean isValidParanthesis(String str) {
+//		Stack<Character> stack = new Stack();
+//		for (int i = 0; i < str.length(); i++) {
+//			if (str.charAt(i) == '(') {
+//				stack.push(str.charAt(i));
+//			} else {
+//				if (stack.isEmpty()) {
+//					return false;
+//				} else {
+//					stack.pop();
+//				}
+//			}
+//		}
+//		return (stack.isEmpty()) ? true : false;
+//
+//	}
 
 }
