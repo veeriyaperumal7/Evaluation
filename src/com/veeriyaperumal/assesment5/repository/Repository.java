@@ -7,6 +7,7 @@ public class Repository {
 	char rooms[][];
 	private Position adventure;
 	private Position gold;
+	private Position monster;
 
 	private static Repository repository;
 
@@ -41,6 +42,15 @@ public class Repository {
 	public void setGold(int row, int column) {
 		this.gold = new Position(row, column);
 		rooms[row - 1][column - 1] = 'G';
+	}
+
+	public void setMonster(int row, int column) {
+		this.monster = new Position(row, column);
+		rooms[row - 1][column - 1] = 'M';
+	}
+
+	public Position getMonster() {
+		return monster;
 	}
 
 }

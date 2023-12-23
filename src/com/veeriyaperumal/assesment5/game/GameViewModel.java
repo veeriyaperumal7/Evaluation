@@ -22,12 +22,29 @@ public class GameViewModel {
 		Repository.getInstance().setGold(row, column);
 	}
 
+	public void setMonsterPosition(int row, int column) {
+		Repository.getInstance().setMonster(row, column);
+
+	}
+
 	public int getPathCount() {
-		int rowsToMove = Math
+		int rowsToMove, columnsToMove, adventureMove, monsterMove;
+		rowsToMove = Math
 				.abs(Repository.getInstance().getAdventure().getRow() - Repository.getInstance().getGold().getRow());
-		int columnsToMove = Math.abs(
+		columnsToMove = Math.abs(
 				Repository.getInstance().getAdventure().getColumn() - Repository.getInstance().getGold().getColumn());
-		return rowsToMove + columnsToMove;
+		adventureMove = rowsToMove + columnsToMove;
+
+		rowsToMove = Math
+				.abs(Repository.getInstance().getMonster().getRow() - Repository.getInstance().getGold().getRow());
+		columnsToMove = Math.abs(
+				Repository.getInstance().getMonster().getColumn() - Repository.getInstance().getGold().getColumn());
+		monsterMove = rowsToMove + columnsToMove;
+		if (adventureMove <= monsterMove) {
+			return adventureMove;
+		} else {
+			return -1;
+		}
 	}
 
 }

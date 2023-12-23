@@ -12,10 +12,18 @@ public class GameView {
 	}
 
 	public void start() {
+		int pathCount;
 		getRoomInput();
 		getPositionOfAdventure();
 		getPositionOfGold();
-		System.out.println("This minimum count to reach : " +  gameViewModel.getPathCount());
+		getPositionOfMonster();
+		pathCount = gameViewModel.getPathCount();
+		if (pathCount != -1) {
+			System.out.println("This minimum count to reach : " + pathCount);
+		} else {
+			System.out.println("There is no way to adventure reach the gold");
+		}
+
 	}
 
 	private void getRoomInput() {
@@ -43,6 +51,15 @@ public class GameView {
 		System.out.print("Enter the position of gold column : ");
 		column = read.nextInt();
 		gameViewModel.setGoldPosition(row, column);
+	}
+
+	private void getPositionOfMonster() {
+		int row, column;
+		System.out.print("Enter the position of monster row : ");
+		row = read.nextInt();
+		System.out.print("Enter the position of monster column : ");
+		column = read.nextInt();
+		gameViewModel.setMonsterPosition(row, column);
 	}
 
 }
