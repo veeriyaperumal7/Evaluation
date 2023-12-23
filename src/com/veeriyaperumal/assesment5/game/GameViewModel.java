@@ -46,25 +46,7 @@ public class GameViewModel {
 		int min = Integer.MAX_VALUE;
 
 		for (int i = 0; i < adventurePath.size(); i++) {
-			ArrayList<Position> adventure = adventurePath.get(i);
-			boolean isPit = false;
-
-			for (int j = 0; j < adventure.size(); j++) {
-				for (int k = 0; k < pits.size(); k++) {
-					if (adventure.get(j).getRow() == pits.get(k).getRow() - 1
-							&& adventure.get(j).getColumn() == pits.get(k).getColumn() - 1) {
-						isPit = true;
-						break;
-					}
-				}
-				if (isPit) {
-					break;
-				}
-			}
-
-			if (!isPit && adventure.size() < min) {
-				min = adventure.size();
-			}
+			min=Math.min(min, adventurePath.get(i).size());
 		}
 
 		return (min == Integer.MAX_VALUE) ? -1 : min - 1;
