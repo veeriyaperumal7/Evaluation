@@ -53,4 +53,8 @@ public class Repository {
 		return monster;
 	}
 
+	public char[][] getRoom() {
+		return rooms;
+	}
+
 }

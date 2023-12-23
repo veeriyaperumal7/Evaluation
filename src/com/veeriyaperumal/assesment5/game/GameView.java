@@ -1,6 +1,8 @@
 package com.veeriyaperumal.assesment5.game;
 
-import com.veeriyaperumal.assesment5.repository.Repository;
+import com.veeriyaperumal.assesment5.dto.Position;
+import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class GameView {
@@ -19,7 +21,12 @@ public class GameView {
 		getPositionOfMonster();
 		pathCount = gameViewModel.getPathCount();
 		if (pathCount != -1) {
-			System.out.println("This minimum count to reach : " + pathCount);
+			ArrayList<Position> path = gameViewModel.getPath();
+			for (int i = 1; i < path.size(); i += 2) {
+				System.out.print("[" + (path.get(i).getRow() + 1) + "," + (path.get(i).getColumn() + 1) + "]->");
+			}
+			System.out.print("Gold");
+
 		} else {
 			System.out.println("There is no way to adventure reach the gold");
 		}
