@@ -1,5 +1,7 @@
 package com.veeriyaperumal.assesment5.repository;
 
+import java.util.ArrayList;
+
 import com.veeriyaperumal.assesment5.dto.Position;
 
 public class Repository {
@@ -9,6 +11,12 @@ public class Repository {
 	private Position gold;
 	private Position monster;
 	private Position triger;
+
+	ArrayList<Position> pits = new ArrayList<>();
+
+	public ArrayList<Position> getPits() {
+		return pits;
+	}
 
 	private static Repository repository;
 
@@ -62,9 +70,14 @@ public class Repository {
 		this.triger = new Position(row, column);
 		rooms[row - 1][column - 1] = 'T';
 	}
-	
+
 	public Position getTriger() {
 		return triger;
+	}
+
+	public void setPit(int row, int column) {
+		rooms[row - 1][column - 1] = 'P';
+		pits.add(new Position(row, column));
 	}
 
 }

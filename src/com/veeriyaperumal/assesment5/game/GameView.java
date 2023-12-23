@@ -17,8 +17,10 @@ public class GameView {
 		int pathCount;
 		getRoomInput();
 		getPositionOfAdventure();
-		getPositionOfMonster();
-		getPositionOfTriger();
+		
+		//getPositionOfMonster();
+		//getPositionOfTriger();
+		getPositionOfPit();
 		getPositionOfGold();
 		pathCount = gameViewModel.getPathCount();
 		if (pathCount != -1) {
@@ -84,6 +86,21 @@ public class GameView {
 		System.out.print("Enter the position of triger column : ");
 		column = read.nextInt();
 		gameViewModel.setTrigerPosition(row, column);
+	}
+	
+	private void getPositionOfPit() {
+		
+		int row, column,n;
+		System.out.print("Enter the how many pits : ");
+		n=read.nextInt();
+		for(int i=0;i<n;i++) {
+			System.out.print("Enter the position of pit row : ");
+			row = read.nextInt();
+			System.out.print("Enter the position of pit column : ");
+			column = read.nextInt();
+			gameViewModel.setPitPosition(row, column);
+		}
+		
 	}
 
 }
