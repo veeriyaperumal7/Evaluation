@@ -8,6 +8,7 @@ public class Repository {
 	private Position adventure;
 	private Position gold;
 	private Position monster;
+	private Position triger;
 
 	private static Repository repository;
 
@@ -55,6 +56,15 @@ public class Repository {
 
 	public char[][] getRoom() {
 		return rooms;
+	}
+
+	public void setTriger(int row, int column) {
+		this.triger = new Position(row, column);
+		rooms[row - 1][column - 1] = 'T';
+	}
+	
+	public Position getTriger() {
+		return triger;
 	}
 
 }

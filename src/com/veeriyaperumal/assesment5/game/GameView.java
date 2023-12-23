@@ -17,19 +17,27 @@ public class GameView {
 		int pathCount;
 		getRoomInput();
 		getPositionOfAdventure();
-		getPositionOfGold();
 		getPositionOfMonster();
+		getPositionOfTriger();
+		getPositionOfGold();
 		pathCount = gameViewModel.getPathCount();
 		if (pathCount != -1) {
-			ArrayList<Position> path = gameViewModel.getPath();
-			for (int i = 1; i < path.size(); i += 2) {
-				System.out.print("[" + (path.get(i).getRow() + 1) + "," + (path.get(i).getColumn() + 1) + "]->");
-			}
-			System.out.print("Gold");
+			System.out.print("The minimum path is : " + pathCount);
 
 		} else {
 			System.out.println("There is no way to adventure reach the gold");
 		}
+		
+//		if (pathCount != -1) {
+//			ArrayList<Position> path = gameViewModel.getPath();
+//			for (int i = 1; i < path.size(); i += 2) {
+//				System.out.print("[" + (path.get(i).getRow() + 1) + "," + (path.get(i).getColumn() + 1) + "]->");
+//			}
+//			System.out.print("Gold");
+//
+//		} else {
+//			System.out.println("There is no way to adventure reach the gold");
+//		}
 
 	}
 
@@ -67,6 +75,15 @@ public class GameView {
 		System.out.print("Enter the position of monster column : ");
 		column = read.nextInt();
 		gameViewModel.setMonsterPosition(row, column);
+	}
+	
+	private void getPositionOfTriger() {
+		int row, column;
+		System.out.print("Enter the position of triger row : ");
+		row = read.nextInt();
+		System.out.print("Enter the position of triger column : ");
+		column = read.nextInt();
+		gameViewModel.setTrigerPosition(row, column);
 	}
 
 }
