@@ -18,7 +18,7 @@ public class GameView {
 		getRoomInput();
 		getPositionOfAdventure();
 		getPositionOfMonster();
-		// getPositionOfTriger();
+		getPositionOfTriger();
 		getPositionOfPit();
 		getPositionOfGold();
 		pathCount = gameViewModel.getPathCount();

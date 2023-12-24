@@ -10,6 +10,7 @@ public class GameViewModel {
 	private GameView gameView;
 	private ArrayList<ArrayList<Position>> adventurePath = new ArrayList<>();
 	private ArrayList<ArrayList<Position>> monsterPath = new ArrayList<>();
+	private ArrayList<ArrayList<Position>> trigerPath = new ArrayList<>();
 	int adventureMove, monsterMove, trigerMove;
 
 	public GameViewModel(GameView gameView) {
@@ -46,14 +47,13 @@ public class GameViewModel {
 		columnsToMove = Math.abs(
 				Repository.getInstance().getMonster().getColumn() - Repository.getInstance().getGold().getColumn());
 		monsterMove = rowsToMove + columnsToMove;
-		if (adventureMove <= monsterMove) {
-			return getPath();
-		} else {
-			return -1;
-		}
+
+		return getPath();
+
 	}
 
 	private int getPath() {
+
 		ArrayList<Position> adventure = new ArrayList();
 		ArrayList<Position> monster = new ArrayList();
 		int size;
@@ -66,12 +66,68 @@ public class GameViewModel {
 				monsterMove);
 
 		size = validpath();
-		if (size < 0) {
-			return -1;
+		if (size > monsterMove) {
+
+			size = getTriggerPath();
+			if (size > 0) {
+				return size;
+			} else {
+				return -1;
+			}
 		} else {
 			return size;
 		}
 
+	}
+
+	private int getTriggerPath() {
+		int min = Integer.MAX_VALUE;
+		ArrayList<Position> adventure = new ArrayList();
+		trigerMove = findMinimumPathToReachTriger(Repository.getInstance().getAdventure().getRow() - 1,
+				Repository.getInstance().getAdventure().getColumn() - 1, Repository.getInstance().getRoom());
+		if (trigerMove < 0) {
+			return -1;
+		}
+
+		min = Integer.MAX_VALUE;
+
+		generateAdventure(Repository.getInstance().getTriger().getRow() - 1,
+				Repository.getInstance().getTriger().getColumn() - 1, adventure, Repository.getInstance().getRoom(),
+				monsterMove);
+		if (adventurePath.size() < 1) {
+			return -1;
+		}
+		for (int i = 0; i < adventurePath.size(); i++) {
+			min = Math.min(min, adventurePath.get(i).size());
+		}
+		return trigerMove + min - 1;
+	}
+
+	private int findMinimumPathToReachTriger(int row, int column, char[][] room) {
+		int[] rowMoves = { 0, 0, -1, 1 };
+		int[] colMoves = { -1, 1, 0, 0 };
+		boolean[][] visited = new boolean[room.length][room[0].length];
+		Queue<Position> paths = new LinkedList<>();
+		paths.add(new Position(row, column, 0));
+		visited[row][column] = true;
+		while (!paths.isEmpty()) {
+			Position currentPosition = paths.poll();
+			if (currentPosition.getRow() == Repository.getInstance().getTriger().getRow() - 1
+					&& currentPosition.getColumn() == Repository.getInstance().getTriger().getColumn() - 1) {
+				return currentPosition.getDistance();
+			}
+			for (int i = 0; i < rowMoves.length; i++) {
+				int row1 = rowMoves[i] + currentPosition.getRow();
+				int column1 = colMoves[i] + currentPosition.getColumn();
+				if (row1 >= 0 && column1 >= 0 && row1 < room.length && column1 < room[0].length
+						&& !visited[row1][column1] && room[row1][column1] != 'P') {
+					visited[row1][column1] = true;
+					paths.add(new Position(row1, column1, currentPosition.getDistance() + 1));
+				}
+			}
+		}
+
+		return -1;
 	}
 
 	private int validpath() {
@@ -88,7 +144,7 @@ public class GameViewModel {
 					break;
 				}
 				monster = monsterPath.get(k);
-				for (int l = 1; l < adventure.size(); l++) {
+				for (int l = 1; l < adventure.size() && l < monster.size(); l++) {
 
 					if (monster.get(l - 1).getRow() == adventure.get(l).getRow()
 							&& monster.get(l - 1).getColumn() == adventure.get(l).getColumn()) {
