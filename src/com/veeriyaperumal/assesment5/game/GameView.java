@@ -23,6 +23,8 @@ public class GameView {
 		getPositionOfGold();
 		pathCount = gameViewModel.getPathCount();
 		if (pathCount != -1) {
+//			gameViewModel.printTriggerPath();
+//			gameViewModel.printAdventurePath();
 			System.out.print("The minimum path is : " + pathCount);
 
 		} else {

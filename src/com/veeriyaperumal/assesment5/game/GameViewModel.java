@@ -49,7 +49,7 @@ public class GameViewModel {
 		monsterMove = rowsToMove + columnsToMove;
 
 		return getPath();
-
+   
 	}
 
 	private int getPath() {
@@ -102,14 +102,42 @@ public class GameViewModel {
 		}
 		return trigerMove + min - 1;
 	}
+	
+	public ArrayList<Position> findPath(int startRow,int startColumn,int targetRow,int targetColumn,char[][] room){
+		int[] xAxis = {0,0,-1,1};
+		int[] yAxis = {-1,1,0,0};
+		boolean[][] visited = new boolean[room.length][room[0].length];
+		Queue<Position> paths = new LinkedList<>();
+		paths.add(new Position(startRow, startRow));
+		while(!paths.isEmpty()) {
+			Position current = paths.poll();		
+			if(current.getRow()==targetRow && current.getColumn()==targetColumn) {
+				return current.getPaths();
+			}
+			for(int i=0;i<xAxis.length;i++) {
+				Position newPosition = new Position(current.getRow()+xAxis[i],current.getColumn()+yAxis[i]);
+				if(isValidPosition(newPosition,room,visited)) {
+					
+				}
+			}
+		}
+		return null;
+	}
+	
+	private boolean isValidPosition(Position pos,char room[][],boolean visited[][]) {
+		if(pos.getRow()>=0 && pos.getRow()<room.length && pos.getColumn()>=0 && pos.getColumn()<room[0].length && room[pos.getRow()][pos.getColumn()]!='P' && room[pos.getRow()][pos.getColumn()]!='M') {
+			return true;
+		}
+		return false;
+	}
 
 	private int findMinimumPathToReachTriger(int row, int column, char[][] room) {
 		int[] rowMoves = { 0, 0, -1, 1 };
 		int[] colMoves = { -1, 1, 0, 0 };
-		boolean[][] visited = new boolean[room.length][room[0].length];
+	
 		Queue<Position> paths = new LinkedList<>();
 		paths.add(new Position(row, column, 0));
-		visited[row][column] = true;
+//		visited[row][column] = true;
 		while (!paths.isEmpty()) {
 			Position currentPosition = paths.poll();
 			if (currentPosition.getRow() == Repository.getInstance().getTriger().getRow() - 1
@@ -119,11 +147,11 @@ public class GameViewModel {
 			for (int i = 0; i < rowMoves.length; i++) {
 				int row1 = rowMoves[i] + currentPosition.getRow();
 				int column1 = colMoves[i] + currentPosition.getColumn();
-				if (row1 >= 0 && column1 >= 0 && row1 < room.length && column1 < room[0].length
-						&& !visited[row1][column1] && room[row1][column1] != 'P') {
-					visited[row1][column1] = true;
-					paths.add(new Position(row1, column1, currentPosition.getDistance() + 1));
-				}
+//				if (row1 >= 0 && column1 >= 0 && row1 < room.length && column1 < room[0].length
+//						&& !visited[row1][column1] && room[row1][column1] != 'P') {
+//					visited[row1][column1] = true;
+//					paths.add(new Position(row1, column1, currentPosition.getDistance() + 1));
+//				}
 			}
 		}
 
@@ -237,5 +265,5 @@ public class GameViewModel {
 		Repository.getInstance().setTriger(row, column);
 
 	}
-
+	
 }

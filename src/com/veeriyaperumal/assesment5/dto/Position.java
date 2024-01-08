@@ -1,9 +1,12 @@
 package com.veeriyaperumal.assesment5.dto;
 
+import java.util.ArrayList;
+
 public class Position {
 	private int row;
 	private int column;
 	private int distance;
+	private ArrayList<Position> paths;
 
 	public Position(int row, int column) {
 		this.row = row;
@@ -38,6 +41,14 @@ public class Position {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public ArrayList<Position> getPaths() {
+		return paths;
+	}
+
+	public void setPaths(ArrayList<Position> paths) {
+		this.paths = paths;
 	}
 
 }
