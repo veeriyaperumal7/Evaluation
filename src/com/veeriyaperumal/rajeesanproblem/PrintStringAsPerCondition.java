@@ -16,7 +16,7 @@ Output :
 This
 is
 a
-///
+///                         
 
 Power
 Shot

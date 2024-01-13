@@ -59,21 +59,16 @@ public class LongestPallindromicSubstring {
 	}
 
 	private String findMaximumSubstring(String str) {
-		String result = "";
 		for (int i = 0; i < str.length(); i++) {
-
 			for (int j = str.length() - 1; j >= i; j--) {
-
 				if (str.charAt(i) == str.charAt(j)) {
 					if (isValidPallindrome(str, i, j)) {
-						if (str.substring(i, j + 1).length() > result.length()) {
-							result = str.substring(i, j + 1);
-						}
+						return str.substring(i, j + 1);
 					}
 				}
 			}
 		}
-		return result;
+		return "";
 	}
 
 	private boolean isValidPallindrome(String str, int i, int j) {
